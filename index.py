@@ -5,8 +5,9 @@ from dash.dependencies import Input, Output, State
 from request import getData
 from template import body
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
+app = Dash(__name__, title='Exchange Rates',
+           external_stylesheets=[dbc.themes.BOOTSTRAP])
+app._favicon = ("ico.png")
 app.layout = body
 
 
