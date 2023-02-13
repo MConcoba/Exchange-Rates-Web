@@ -2,12 +2,12 @@ import json
 
 import requests
 
-from env import key_api
+from env import key_api, url_api
 
 
 def getData(start, end):
-    url = "https://api.apilayer.com/exchangerates_data/timeseries?start_date=" + \
-          start+"&end_date="+end+"&base=USD&symbols=JPY,GTQ,BEF,CHF,FRF,CAD,ITL,GBP,DEM,ESP,ATS,NLG,SEK,CRC,SVC,MXP,HNL,NIC,VEB,DKK,EUR,NOK,SDR,IDB,ARP,BRC,KRW,HKD,TWD,CNY,PKR,INR,VEF,COP"
+    url = url_api + "/timeseries?start_date=" + start+"&end_date="+end + \
+        "&base=USD&symbols=JPY,GTQ,BEF,CHF,FRF,CAD,ITL,GBP,DEM,ESP,ATS,NLG,SEK,CRC,SVC,MXP,HNL,NIC,VEB,DKK,EUR,NOK,SDR,IDB,ARP,BRC,KRW,HKD,TWD,CNY,PKR,INR,VEF,COP"
 
     payload = {}
     headers = {
