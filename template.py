@@ -34,8 +34,8 @@ body = html.Div(
         html.Div(
             className='card',
             children=[
-                dbc.Spinner(color="primary", type="grow",
-                            id="loading-indicator", spinnerClassName='loader'),
-                html.Div(id='res', className='date-picker')
-            ])
+                dbc.Spinner(children=[html.Div(id='res', className='date-picker', style={'margin': 'auto'})],
+                            size="lg", color="primary", type="border", fullscreen=True, spinner_style={'margin': 'auto'}),
+
+            ], style={'align-items': 'center'})
     ])
