@@ -2,6 +2,7 @@ import json
 
 import pandas as pd
 import requests
+import tableprint
 
 from env import key_api, url_api
 
@@ -38,6 +39,11 @@ def getData(start, end):
         columns=['Fecha', 'Moneda', 'Valor']
     )
 
-    print(df)
+    data = [(d['fecha'], x['iso'], round(x['valor'], 2))
+            for d in resultado for x in d['monedas']]
+    headers = ['No.' 'Fecha', 'Moneda', 'Valor']
+
+    # print(df)
+    tableprint.table(data, headers)
 
     return resultado

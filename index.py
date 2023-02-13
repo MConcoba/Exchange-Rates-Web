@@ -22,7 +22,6 @@ app.layout = body
 )
 def update_output(btn, start_date, end_date,):
     print(btn)
-
     if btn > 0:
         data = getData(start_date, end_date)
         info = 'Revisa la consola'
