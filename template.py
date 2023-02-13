@@ -1,12 +1,9 @@
 from datetime import date
 
 import dash_bootstrap_components as dbc
-from dash import Dash, dcc, html
+from dash import dcc, html
 
 from dates import date_end, date_start
-
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
 
 body = html.Div(
     className='wrapper',
