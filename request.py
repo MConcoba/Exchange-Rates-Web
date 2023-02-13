@@ -1,5 +1,6 @@
 import json
 
+import pandas as pd
 import requests
 
 from env import key_api, url_api
@@ -24,10 +25,19 @@ def getData(start, end):
             'monedas': [
                 {
                     'iso': iso,
-                    'valor': valor,
+                    'valor': round(valor, 2),
                 } for iso, valor in monedas.items()
             ]
         } for fecha, monedas in rates.items()
     ]
+
+    pd.set_option('display.max_rows', 1500)
+    df = pd.DataFrame(
+        [(d['fecha'], x['iso'], round(x['valor'], 2))
+            for d in resultado for x in d['monedas']],
+        columns=['Fecha', 'Moneda', 'Valor']
+    )
+
+    print(df)
 
     return resultado
