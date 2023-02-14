@@ -7,10 +7,9 @@ import tableprint
 from env import key_api, url_api
 
 
-def getData(start, end):
+def getData(start, end, coins):
     url = url_api + "/timeseries?start_date=" + start+"&end_date="+end + \
-        "&base=USD&symbols=JPY,GTQ,BEF,CHF,FRF,CAD,ITL,GBP,DEM,ESP,ATS,NLG,SEK,CRC,SVC,MXP,HNL,NIC,VEB,DKK,EUR,NOK,SDR,IDB,ARP,BRC,KRW,HKD,TWD,CNY,PKR,INR,VEF,COP"
-
+        "&base=USD&symbols="+coins
     payload = {}
     headers = {
         "apikey": key_api
@@ -47,4 +46,26 @@ def getData(start, end):
     # print(df)
     tableprint.table(data, headers)
     print("________________________________________")
+    return resultado
+
+def getSymbols():
+    url = url_api + "/symbols"
+
+    payload = {}
+    headers = {
+        "apikey": key_api
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    result = response.text
+    datos = json.loads(result)
+    symbols = datos['symbols']
+    resultado = [
+        {
+            'value': iso,
+            'label': nombre
+        } for iso, nombre in symbols.items()
+    ]
+   #S print(resultado)
+    
     return resultado

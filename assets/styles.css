@@ -51,12 +51,12 @@
     transition: all 0.15s;
     margin: auto;
     text-align: center;
-    width: 20vh;
+    width: 100%;
 }
 
 .button {
     margin: 15px auto 5px;
-    width: 25vh;
+    font-size: 1rem;
 }
 
 .card-button:hover {
@@ -64,21 +64,28 @@
     color: #0099f9;
 }
 
-.date-picker{
-  display: table;
-  margin: auto;
+.date-picker {
+    /* display: table; */
+    /* margin: auto; */
 }
 
 
-.loader{
+.loader {
     display: none;
 }
 
-.block{
+.block {
     display: block;
 }
 
-.tabla{
+.tabla {
     /* overflow-y:auto; */
     height: 100%;
+}
+
+.label {
+    font-size: 1rem;
+    font-style: italic;
+    color: #cecece;
+    margin-top: 5px;
 }
