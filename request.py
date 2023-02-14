@@ -41,9 +41,10 @@ def getData(start, end):
 
     data = [(d['fecha'], x['iso'], round(x['valor'], 2))
             for d in resultado for x in d['monedas']]
-    headers = ['No.' 'Fecha', 'Moneda', 'Valor']
+    headers = ['Fecha', 'Moneda', 'Valor']
 
+    print('------------ Cambios de USD ------------')
     # print(df)
     tableprint.table(data, headers)
-
+    print("________________________________________")
     return resultado
