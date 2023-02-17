@@ -3,6 +3,7 @@ from dash import Dash, ctx, dash_table, dcc, html
 from dash.dependencies import Input, Output, State
 
 from request import find_currencies_labels, getData, getSymbols
+from table import table_Data
 from template import body
 
 app = Dash(__name__, title='Exchange Rates',
@@ -22,11 +23,14 @@ app.layout = body
 def update_output(btn, start_date, end_date, select):
     if 'submit' == ctx.triggered_id:
         s = select
-        if (len(select) > 3):
+        rows = 1
+        if (type(select) == list):
             s = ",".join(select)
+            rows = len(select)
         # find_currencies_labels(getSymbols(), s)
         data = getData(start_date, end_date, s)
-        info = 'Revisa la consola'
+        # info = 'Revisa la consola'
+        info = table_Data(data, rows)
     else:
         info = 'Para obtener los datos da completa la informacion y da click en el boton'
     return info
