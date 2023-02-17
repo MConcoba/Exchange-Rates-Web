@@ -3,6 +3,7 @@ from datetime import date, datetime, timedelta
 today = datetime.now()
 
 name_day = today.strftime('%A')
+
 if name_day == 'Thursday':
     date_end = today - timedelta(days=6)
 elif name_day == 'Wednesday':
@@ -19,4 +20,4 @@ else:
     date_end = today
 
 date_start = date_end - timedelta(days=4)
-last_day = today - timedelta(days=1)
+# last_day = today - timedelta(days=1)

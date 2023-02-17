@@ -18,10 +18,13 @@ app.layout = body
      Input('my-date-picker-range', 'end_date'),
      Input('country-select', 'value')],
 )
+#
 def update_output(btn, start_date, end_date, select):
     if 'submit' == ctx.triggered_id:
-        s = ",".join(select)
-        find_currencies_labels(getSymbols(), s)
+        s = select
+        if (len(select) > 3):
+            s = ",".join(select)
+        # find_currencies_labels(getSymbols(), s)
         data = getData(start_date, end_date, s)
         info = 'Revisa la consola'
     else:

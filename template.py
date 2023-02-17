@@ -24,7 +24,8 @@ body = html.Div(
                             min_date_allowed=date(2023, 1, 1),
                             max_date_allowed=date(
                                 today.year, today.month, today.day),
-                            initial_visible_month=date(2023, 2, 6),
+                            initial_visible_month=date(
+                                today.year, today.month, today.day),
                             end_date=date(
                                 date_end.year, date_end.month, date_end.day),
                             start_date=date(date_start.year,
