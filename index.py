@@ -1,8 +1,9 @@
 import dash_bootstrap_components as dbc
-from dash import Dash, ctx, dash_table, dcc, html
-from dash.dependencies import Input, Output, State
+from dash import Dash, ctx
+from dash.dependencies import Input, Output
 
-from request import find_currencies_labels, getData, getSymbols
+from env import prod
+from request import getData
 from table import table_Data
 from template import body
 
@@ -37,4 +38,4 @@ def update_output(btn, start_date, end_date, select):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=prod)
