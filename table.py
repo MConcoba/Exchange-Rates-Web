@@ -14,7 +14,7 @@ def table_Data(data, span):
             if is_first_row:  # si es la primera fila con esa fecha
                 rows.append(html.Tr([
                     html.Td(fecha, rowSpan=span, style={
-                            'vertical-align': 'middle'}),
+                            'verticalAlign': 'middle'}),
                     html.Td(iso),
                     html.Td(pais),
                     html.Td(round(valor, 2))
@@ -29,6 +29,9 @@ def table_Data(data, span):
         
     return html.Div([
         html.Div([
+            dbc.Label('Resultados de cambios a USD', className='card-title'),
+        ]),
+        html.Div([
             html.Table([
                 html.Thead([
                     html.Tr([
@@ -39,7 +42,7 @@ def table_Data(data, span):
                     ])
                 ]),
                 html.Tbody(rows)
-            ], className='table table-bordered table-primary table-striped text-center border border-dark', 
+            ], className='table table-bordered table-primary table-striped text-center border border-dark tabla', 
             style={'width': '90%', 'margin': 'auto'})
         ])
     ])

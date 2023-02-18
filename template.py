@@ -4,13 +4,22 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html
 
 from dates import date_end, date_start, today
-from request import getData, getSymbols
+from request import getSymbols
 
 all_option = []
 body = html.Div(
     className='wrapper',
     children=[
-        html.H3('Cambio de Modenas a USD', className='main-title'),
+        dbc.Row([
+            dbc.Col([
+                html.Div(children=[
+                    html.Img(src='assets/ico.png'),
+                    html.H3('Cambio de Modenas a USD', className='main-title', 
+                        style={'margin': 'auto 5px'}),
+                ], style={'display': 'flex', 'margin': 'auto', 
+                    'justifyContent': 'center'})
+            ])
+        ]),
         dbc.Row([
             dbc.Col([
                 html.Div(
