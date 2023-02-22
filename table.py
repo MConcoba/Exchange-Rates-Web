@@ -35,7 +35,7 @@ def table_Data(data, span):
             html.Table([
                 html.Thead([
                     html.Tr([
-                        html.Th('Fecha', style={'width': '25px'}),
+                        html.Th('Fecha', style={'width': '105px'}),
                         html.Th('Moneda'),
                         html.Th('Nombre Moneda'),
                         html.Th('Valor')
