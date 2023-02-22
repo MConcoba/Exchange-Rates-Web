@@ -8,8 +8,7 @@ from env import key_api, url_api
 
 
 def getData(start, end, coins):
-    url = url_api + "/timeseries?start_date=" + start+"&end_date="+end + \
-        "&base=USD&symbols="+coins
+    url = f"{url_api}/timeseries?start_date={start}&end_date={end}&base=USD&symbols={coins}"
     payload = {}
     headers = {
         "apikey": key_api
