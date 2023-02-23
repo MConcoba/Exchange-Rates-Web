@@ -16,7 +16,10 @@ class Pila():
       self.lista += [dato]
       self.tope += 1
     else:
-      print('La pila esta llena')
+      self.size += 5
+      self.lista += [dato]
+      self.tope += 1
+      # print('La pila esta llena')
 
   def pop(self):
     if self.empty():
