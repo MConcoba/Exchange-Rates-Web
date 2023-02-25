@@ -23,8 +23,7 @@ def obtenerCambios(date):
     df_rates = pd.DataFrame({"Tasas": df['rates']})
 
     for i in df_rates.index:
-        print("Fecha: " + date + " Moneda " +
-              i + " " + str(df_rates["Tasas"][i]))
+        print("Fecha de cambio: " + dia.strftime('%Y-%m-%d') + " Moneda " + i + " " + str(df_rates["Tasas"][i]))
 
 
 days = ['2023-01-02', '2023-01-03', '2023-01-04']
