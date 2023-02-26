@@ -30,8 +30,8 @@ def update_output(btn, start_date, end_date, select):
             rows = len(select)
         # find_currencies_labels(getSymbols(), s)
         data = getData(start_date, end_date, s)
-        info = 'Revisa la consola 💻'
-        # info = table_Data(data, rows)
+        #info = 'Revisa la consola 💻'
+        info = table_Data(data, rows)
     else:
         info = 'Para obtener los datos da completa la informacion y da click en el boton'
     return info
