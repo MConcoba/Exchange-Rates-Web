@@ -2,13 +2,14 @@ import json
 
 import pandas as pd
 import requests
+from datetime import date
 
-days = ['2023-01-02', '2023-01-03', '2023-01-04']
+dia1 = date(2023, 1, 1) # año - mes - dia
+print(dia1)
+dias = [date(2023, 1, 1), date(2023, 1, 2)]
 
-for day in days:
-    url = "https://api.apilayer.com/exchangerates_data/" + day + \
-        "?symbols=JPY,GTQ,BEF,CHF,FRF,CAD,ITL,GBP,DEM,ESP,ATS,NLG,SEK,CRC,SVC,MXP,HNL,NIC,VEB,DKK,EUR,NOK,SDR,IDB,ARP,BRC,KRW,HKD,TWD,CNY,PKR,INR,VEF,COP&base=USD"
-
+for dia in dias:
+    url = "https://api.apilayer.com/exchangerates_data/" + dia.strftime('%Y-%m-%d') + "?symbols=JPY,GTQ,BEF,CHF,FRF,CAD,ITL,GBP,DEM,ESP,ATS,NLG,SEK,CRC,SVC,MXP,HNL,NIC,VEB,DKK,EUR,NOK,SDR,IDB,ARP,BRC,KRW,HKD,TWD,CNY,PKR,INR,VEF,COP&base=USD"
     payload = {}
     headers = {"apikey": "x6J5I3oRy4BjphrilXZO5Iha7qGUDJFD"}
 
