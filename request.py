@@ -5,9 +5,9 @@ import requests
 import tableprint
 
 from env import key_api, url_api
-from cirucular_double_controller import CircularDouble
+from controllers.cirucular_double_controller import CircularDouble
 
-lista = CircularDouble()
+
 
 
 def getData(start, end, coins):
@@ -22,50 +22,40 @@ def getData(start, end, coins):
     result = response.text
     datos = json.loads(result)
     rates = datos['rates']
-    resultado = [
-        {
-            'fecha': fecha,
-            'monedas': [
-                {
-                    'iso': iso,
-                    'pais': '',
-                    'valor': round(valor, 2),
-                } for iso, valor in monedas.items()
-            ]
-        } for fecha, monedas in rates.items()
-    ]
 
+    exchange_reates = []
+    for date, values in rates.items():
+        for iso, value in values.items():
+            exchange_reates.append({
+                'date': date,
+                'iso': iso,
+                'country': '',
+                'value': value
+            })
     symbols = getSymbols()  # Obtener la lista de símbolos
 
-    for r in resultado:
-        for m in r['monedas']:
-            for s in symbols:
-                if s['value'] == m['iso']:
-                    m['pais'] = s['label']  # Buscar el país y asignar su valor
+    for i in exchange_reates:
+        for s in symbols:
+            if s['value'] == i['iso']:
+                i['country'] = s['label'] # Buscar el país y asignar su valor
 
-    data = [(d['fecha'], x['iso'], x['pais'], round(x['valor'], 2))
-            for d in resultado for x in d['monedas']]
-    headers = ['Fecha', 'Moneda ISO', 'Nombre Moneda', 'Valor']
+    lista = CircularDouble()
+    for x in range(len(exchange_reates)):
+        lista.add(exchange_reates[x], 'last')
 
-    newDa = [
-        {
-            'date': f['fecha'],
-            'iso': x['iso'],
-            'country': x['pais'],
-            'value': round(x['valor'], 2),
-        } for f in resultado for x in f['monedas']
-    ]
-
-    for x in range(len(newDa)):
-        lista.add_last(newDa[x])
-
-    print('------------ Cambios de USD ------------')
-    # print(newDa[0])
-    # print(data[0]['fecha']['monedas'][0])
-    # tableprint.table(data, headers)
-    lista.show_from_init()
-    print("________________________________________")
-    return resultado
+    print('*'*100)
+    
+    print('INFORMACION DEL PRIMER DATO')
+    print('     Valor', lista.first.data)
+    print('     Siguiente', lista.first.next.data['date'])
+    print('     Anterior', lista.first.prev.data['date'])
+    print('_'*100)
+    print('INFORMACION DEL ULTIMO DATO')
+    print('     Valor', lista.last.data)
+    print('     Siguiente', lista.last.next.data['date'])
+    print('     Anterior', lista.last.prev.data['date'])
+    print('*'*100)
+    return lista.show_group_from_init()
 
 
 def getSymbols():
