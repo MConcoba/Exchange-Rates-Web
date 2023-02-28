@@ -17,44 +17,48 @@ def getData(start, end, coins):
     }
 
     response = requests.request("GET", url, headers=headers, data=payload)
-    result = response.text
-    datos = json.loads(result)
-    rates = datos['rates']
+    status_code = response.status_code
+    if status_code == 200:
+        result = response.text
+        datos = json.loads(result)
+        rates = datos['rates']
 
-    exchange_reates = []
-    for date, values in rates.items():
-        for iso, value in values.items():
-            exchange_reates.append({
-                'date': date,
-                'iso': iso,
-                'country': '',
-                'value': round(value, 2)
-            })
-    symbols = getSymbols()  # Obtener la lista de símbolos
+        exchange_reates = []
+        for date, values in rates.items():
+            for iso, value in values.items():
+                exchange_reates.append({
+                    'date': date,
+                    'iso': iso,
+                    'country': '',
+                    'value': round(value, 2)
+                })
+        symbols = getSymbols()  # Obtener la lista de símbolos
 
-    for i in exchange_reates:
-        for s in symbols:
-            if s['value'] == i['iso']:
-                i['country'] = s['label'] # Buscar el país y asignar su valor
+        for i in exchange_reates:
+            for s in symbols:
+                if s['value'] == i['iso']:
+                    i['country'] = s['label'] # Buscar el país y asignar su valor
 
-    lista = CircularDouble()
-    for x in range(len(exchange_reates)):
-        lista.add(exchange_reates[x], 'last')
+        lista = CircularDouble()
+        for x in range(len(exchange_reates)):
+            lista.add(exchange_reates[x], 'last')
 
-    print('*'*100)
-    
-    print('INFORMACION DEL PRIMER DATO')
-    print('     Valor', lista.first.data)
-    print('     Siguiente', lista.first.next.data)
-    print('     Anterior', lista.first.prev.data)
-    print('_'*100)
-    print('INFORMACION DEL ULTIMO DATO')
-    print('     Valor', lista.last.data)
-    print('     Siguiente', lista.last.next.data)
-    print('     Anterior', lista.last.prev.data)
-    
-    print('*'*100)
-    return lista.show_group_from_init()
+        print('*'*100)
+        
+        print('INFORMACION DEL PRIMER DATO')
+        print('     Valor', lista.first.data)
+        print('     Siguiente', lista.first.next.data)
+        print('     Anterior', lista.first.prev.data)
+        print('_'*100)
+        print('INFORMACION DEL ULTIMO DATO')
+        print('     Valor', lista.last.data)
+        print('     Siguiente', lista.last.next.data)
+        print('     Anterior', lista.last.prev.data)
+        
+        print('*'*100)
+        return lista.show_group_from_init()
+    else:
+        return {'status': False, 'message': 'Error al obtener los datos'}
 
 
 def getSymbols():
