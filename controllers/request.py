@@ -8,8 +8,6 @@ from env import key_api, url_api
 from controllers.cirucular_double_controller import CircularDouble
 
 
-
-
 def getData(start, end, coins):
     url = url_api + "/timeseries?start_date=" + start+"&end_date="+end + \
         "&base=USD&symbols="+coins
@@ -30,7 +28,7 @@ def getData(start, end, coins):
                 'date': date,
                 'iso': iso,
                 'country': '',
-                'value': value
+                'value': round(value, 2)
             })
     symbols = getSymbols()  # Obtener la lista de símbolos
 
@@ -47,13 +45,14 @@ def getData(start, end, coins):
     
     print('INFORMACION DEL PRIMER DATO')
     print('     Valor', lista.first.data)
-    print('     Siguiente', lista.first.next.data['date'])
-    print('     Anterior', lista.first.prev.data['date'])
+    print('     Siguiente', lista.first.next.data)
+    print('     Anterior', lista.first.prev.data)
     print('_'*100)
     print('INFORMACION DEL ULTIMO DATO')
     print('     Valor', lista.last.data)
-    print('     Siguiente', lista.last.next.data['date'])
-    print('     Anterior', lista.last.prev.data['date'])
+    print('     Siguiente', lista.last.next.data)
+    print('     Anterior', lista.last.prev.data)
+    
     print('*'*100)
     return lista.show_group_from_init()
 

@@ -3,9 +3,9 @@ from dash import Dash, ctx
 from dash.dependencies import Input, Output
 
 from env import prod
-from request import getData
-from table import table_Data
-from template import body
+from controllers.request import getData
+from views.table import table_Data
+from views.template import body
 
 app = Dash(__name__, title='Exchange Rates',
            external_stylesheets=[dbc.themes.BOOTSTRAP])
