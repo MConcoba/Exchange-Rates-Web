@@ -5,6 +5,9 @@ import requests
 import tableprint
 
 from env import key_api, url_api
+from cirucular_double_controller import CircularDouble
+
+lista = CircularDouble()
 
 
 def getData(start, end, coins):
@@ -40,20 +43,27 @@ def getData(start, end, coins):
                 if s['value'] == m['iso']:
                     m['pais'] = s['label']  # Buscar el país y asignar su valor
 
-    pd.set_option('display.max_rows', 1500)
-    df = pd.DataFrame(
-        [(d['fecha'], x['iso'], x['pais'], round(x['valor'], 2))
-            for d in resultado for x in d['monedas']],
-        columns=['Fecha', 'Moneda ISO', 'Nombre Moneda', 'Valor']
-    )
-
     data = [(d['fecha'], x['iso'], x['pais'], round(x['valor'], 2))
             for d in resultado for x in d['monedas']]
     headers = ['Fecha', 'Moneda ISO', 'Nombre Moneda', 'Valor']
 
+    newDa = [
+        {
+            'date': f['fecha'],
+            'iso': x['iso'],
+            'country': x['pais'],
+            'value': round(x['valor'], 2),
+        } for f in resultado for x in f['monedas']
+    ]
+
+    for x in range(len(newDa)):
+        lista.add_last(newDa[x])
+
     print('------------ Cambios de USD ------------')
-    # print(df)
-    tableprint.table(data, headers)
+    # print(newDa[0])
+    # print(data[0]['fecha']['monedas'][0])
+    # tableprint.table(data, headers)
+    lista.show_from_init()
     print("________________________________________")
     return resultado
 
