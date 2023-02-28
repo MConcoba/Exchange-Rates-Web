@@ -30,7 +30,7 @@ def update_output(btn, start_date, end_date, select):
         if data['status'] == False:
             return get_error_modal(data['message'])
         else: 
-            info = table_Data(data, rows)
+            info = table_Data(data['records'], rows)
     else:
         info = 'Para obtener los datos da completa la informacion y da click en el boton'
     return info

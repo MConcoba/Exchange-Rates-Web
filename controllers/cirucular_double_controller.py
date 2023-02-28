@@ -57,7 +57,7 @@ class CircularDouble():
             pais = item['country']
             valor = item['value']
             monedas[fecha].append({'iso': iso, 'pais': pais, 'valor': valor})
-        resultado = [{'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]
+        resultado = {'status': True, 'records': [{'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
         return resultado
     
     def __join_nodes__(self):
