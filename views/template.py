@@ -80,5 +80,6 @@ body = html.Div(
         is_open=False,
     ),
 
+    html.Div(id=f"delete-row-{0}", style={'display': 'none'}), 
 
     ])

@@ -1,5 +1,8 @@
 import dash_bootstrap_components as dbc
 from dash import html
+from dash_iconify import DashIconify
+import pickle
+
 
 
 def table_Data(data, span):
@@ -8,6 +11,7 @@ def table_Data(data, span):
         fecha = row['fecha']
         is_first_row = True
         for moneda in row['monedas']:
+            id = moneda['id']
             iso = moneda['iso']
             pais = moneda['pais']
             valor = moneda['valor']
@@ -17,14 +21,24 @@ def table_Data(data, span):
                             'verticalAlign': 'middle'}),
                     html.Td(iso),
                     html.Td(pais),
-                    html.Td(round(valor, 2))
+                    html.Td(round(valor, 2)),
+                    html.Td(
+                        DashIconify(
+                            id=f"delete-row-{id}", icon="ion:trash", color="red", width=30
+                        )
+                    ),
                 ]))
                 is_first_row = False  # marcar como que ya no es la primera fila con esa fecha
             else:
                 rows.append(html.Tr([
                     html.Td(iso),
                     html.Td(pais),
-                    html.Td(round(valor, 2))
+                    html.Td(round(valor, 2)),
+                    html.Td(
+                        DashIconify(
+                            icon="ion:trash", color="red", width=30, className="ac-icon"
+                        )
+                    ),
                 ]))
         
     return html.Div([
@@ -38,7 +52,8 @@ def table_Data(data, span):
                         html.Th('Fecha', style={'width': '125px'}),
                         html.Th('Moneda'),
                         html.Th('Nombre Moneda'),
-                        html.Th('Valor')
+                        html.Th('Valor'),
+                        html.Th('Acciones')
                     ])
                 ]),
                 html.Tbody(rows)

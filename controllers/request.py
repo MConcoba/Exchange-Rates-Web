@@ -23,15 +23,19 @@ def getData(start, end, coins):
         datos = json.loads(result)
         rates = datos['rates']
 
+        i = 1
         exchange_reates = []
         for date, values in rates.items():
             for iso, value in values.items():
+                
                 exchange_reates.append({
+                    'id': i,
                     'date': date,
                     'iso': iso,
                     'country': '',
                     'value': round(value, 2)
                 })
+                i+=1
         symbols = getSymbols()  # Obtener la lista de símbolos
 
         for i in exchange_reates:

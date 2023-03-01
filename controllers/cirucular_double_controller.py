@@ -39,6 +39,25 @@ class CircularDouble():
         else:
             return 'Error to delete element'
 
+    def delete(self, value):
+        current_node = self.first
+        while current_node.data != value:
+            current_node = current_node.next
+            if current_node == self.first:
+                return "El elemento no existe"
+        if current_node == self.first:
+            self.first = current_node.next
+            self.first.prev = self.last
+            self.last.next = self.first
+        elif current_node == self.last:
+            self.last = current_node.prev
+            self.last.next = self.first
+            self.first.prev = self.last
+        else:
+            current_node.prev.next = current_node.next
+            current_node.next.prev = current_node.prev
+        return self.show_group_from_init()
+
     def show_from_init(self):
         lista = []
         aux = self.first
@@ -54,9 +73,10 @@ class CircularDouble():
         for item in self.show_from_init():
             fecha = item['date']
             iso = item['iso']
+            id = item['id']
             pais = item['country']
             valor = item['value']
-            monedas[fecha].append({'iso': iso, 'pais': pais, 'valor': valor})
+            monedas[fecha].append({'id': id, 'iso': iso, 'pais': pais, 'valor': valor})
         resultado = {'status': True, 'records': [{'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
         return resultado
     
