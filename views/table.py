@@ -22,11 +22,11 @@ def table_Data(data, span):
                     html.Td(iso),
                     html.Td(pais),
                     html.Td(round(valor, 2)),
-                    html.Td(
-                        DashIconify(
-                            id=f"delete-row-{id}", icon="ion:trash", color="red", width=30
-                        )
-                    ),
+                     #html.Td(
+                    #    DashIconify(
+                    #        icon="ion:trash", color="red", width=30, className="ac-icon"
+                    #    )
+                    #),
                 ]))
                 is_first_row = False  # marcar como que ya no es la primera fila con esa fecha
             else:
@@ -34,11 +34,11 @@ def table_Data(data, span):
                     html.Td(iso),
                     html.Td(pais),
                     html.Td(round(valor, 2)),
-                    html.Td(
-                        DashIconify(
-                            icon="ion:trash", color="red", width=30, className="ac-icon"
-                        )
-                    ),
+                    #html.Td(
+                    #    DashIconify(
+                    #        icon="ion:trash", color="red", width=30, className="ac-icon"
+                    #    )
+                    #),
                 ]))
         
     return html.Div([
@@ -53,7 +53,7 @@ def table_Data(data, span):
                         html.Th('Moneda'),
                         html.Th('Nombre Moneda'),
                         html.Th('Valor'),
-                        html.Th('Acciones')
+                       # html.Th('Acciones')
                     ])
                 ]),
                 html.Tbody(rows)

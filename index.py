@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import ctx, State
+from dash import ctx, State, dash
 from dash.dependencies import Input, Output
 
 from env import prod
@@ -32,6 +32,7 @@ def update_output(btn, start_date, end_date, select):
         else: 
             info = table_Data(data['records'], rows)
     else:
+        return dash.no_update
         info = 'Para obtener los datos da completa la informacion y da click en el boton'
     return info
 
@@ -45,6 +46,19 @@ def toggle_error_modal(n_clicks, is_open):
         return not is_open
     return is_open
 
+
+
+    ctx = dash.callback_context
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    row_index = int(button_id.split('-')[-1])
+
+    # elimina la fila correspondiente de la lista de datos
+    del data[row_index]
+
+    # actualiza la tabla con los datos actualizados
+    updated_table = table_Data(data)
+    
+    return updated_table
 
 
 if __name__ == '__main__':
