@@ -1,8 +1,9 @@
 import json
-
+import os
 import pandas as pd
 import requests
 import tableprint
+from datetime import datetime, timedelta
 
 from env import key_api, url_api
 from controllers.cirucular_double_controller import CircularDouble
@@ -47,12 +48,15 @@ def getData(start, end, coins):
         for x in range(len(exchange_reates)):
             lista.add(exchange_reates[x], 'last')
 
+        os.system('cls')
+        now = datetime.now()
+
         print('*'*100)
-        
+        print('Fecha Actual => ' + now.strftime('%Y-%m-%d %H:%M:%S'))
         print('INFORMACION DEL PRIMER DATO')
         print('     Valor', lista.first.data)
         print('     Siguiente', lista.first.next.data)
-        print('     Anterior', lista.first.prev.data)
+        print('     Anterior', lista.first.prev.data) 
         print('_'*100)
         print('INFORMACION DEL ULTIMO DATO')
         print('     Valor', lista.last.data)
