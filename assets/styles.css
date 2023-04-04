@@ -91,3 +91,16 @@ body {
     color: #cecece;
     margin-top: 5px;
 }
+
+.ac-icon:hover{
+    cursor: pointer;
+}
+
+svg {
+    cursor: pointer;
+}
+
+svg:hover {
+    cursor: pointer;
+    transform: scale(1.3);
+}

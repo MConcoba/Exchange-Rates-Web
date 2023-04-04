@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import ctx, State
+from dash import ctx, State, dash
 from dash.dependencies import Input, Output
 
 from env import prod
@@ -33,6 +33,7 @@ def update_output(btn, start_date, end_date, select, btn2):
     elif 'random' == ctx.triggered_id:
         info = get_ramdom()
     else:
+        return dash.no_update
         info = 'Para obtener los datos da completa la informacion y da click en el boton'
     return info
 

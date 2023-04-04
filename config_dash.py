@@ -4,6 +4,6 @@ from views.template import body
 
 
 app = Dash(__name__, title='Exchange Rates',
-           external_stylesheets=[dbc.themes.BOOTSTRAP])
+           external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.FONT_AWESOME, ])
 app._favicon = ("ico.png")
 app.layout = body

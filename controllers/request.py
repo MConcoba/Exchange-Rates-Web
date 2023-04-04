@@ -1,5 +1,5 @@
 import json
-
+import os
 import pandas as pd
 import requests
 # import tableprint
@@ -26,10 +26,12 @@ def getData(start, end, coins):
         datos = json.loads(result)
         rates = datos['rates']
 
+        i = 1
         exchange_reates = []
         id_counter = 1
         for date, values in rates.items():
             for iso, value in values.items():
+                
                 exchange_reates.append({
                     'id': id_counter,
                     'date': date,
@@ -49,12 +51,14 @@ def getData(start, end, coins):
         for x in range(len(exchange_reates)):
             lista.add(exchange_reates[x], 'last')
 
-        print('*'*100)
+        os.system('cls')
+        now = datetime.now()
 
+        print('*'*100)
         print('INFORMACION DEL PRIMER DATO')
         print('     Valor', lista.first.data)
         print('     Siguiente', lista.first.next.data)
-        print('     Anterior', lista.first.prev.data)
+        print('     Anterior', lista.first.prev.data) 
         print('_'*100)
         print('INFORMACION DEL ULTIMO DATO')
         print('     Valor', lista.last.data)
