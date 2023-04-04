@@ -1,6 +1,8 @@
 from collections import defaultdict
 
 from models.data_saved_model import Data
+import random
+
 
 class CircularDouble():
 
@@ -48,18 +50,39 @@ class CircularDouble():
             if aux == self.first:
                 break
         return lista
-    
+
+    def clear(self):
+        self.first = None
+        self.last = None
+
     def show_group_from_init(self):
         monedas = defaultdict(list)
         for item in self.show_from_init():
             fecha = item['date']
+            id = item['id']
             iso = item['iso']
             pais = item['country']
             valor = item['value']
-            monedas[fecha].append({'iso': iso, 'pais': pais, 'valor': valor})
-        resultado = {'status': True, 'records': [{'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
+            monedas[fecha].append(
+                {'id': id, 'iso': iso, 'pais': pais, 'valor': valor})
+        resultado = {'status': True, 'records': [
+            {'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
         return resultado
-    
+
+    def get_random_list(self):
+        list_random = []
+        lista = self.show_from_init()
+        random.shuffle(lista)
+        nueva_lista = lista
+        random.shuffle(nueva_lista)
+        for item in nueva_lista:
+            list_random.append(item['id'])
+        print(list_random)
+        return list_random
+
+    def get_lent(self):
+        return self.show_from_init().__len__()
+
     def __join_nodes__(self):
         if self.first != None:
             self.first.prev = self.last
