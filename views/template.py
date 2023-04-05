@@ -2,11 +2,43 @@ from datetime import date
 
 import dash_bootstrap_components as dbc
 from dash import dcc, html
+from dash.dependencies import Input, Output
 
 from models.dates import date_end, date_start, today
 from controllers.request import getSymbols
 
 all_option = []
+siderbar_global = html.Div(
+    [
+        dbc.Nav(
+            [
+                dbc.NavItem(dbc.NavLink("Datos", href="/", active="exact")),
+                dbc.NavItem(dbc.NavLink("Arboles", href="/binary",  active="exact")),
+            ],
+            pills=True,
+        )
+    ]
+)
+
+
+sidebar_trees = html.Div(
+    [
+        html.H2("", className="display-4"),
+        html.Hr(),
+        html.P(
+            "Tipos de arboles", className="lead"
+        ),
+        dbc.Nav(
+            [
+                dbc.NavLink("Arbol Binario", href="/binary", active="exact"),
+                dbc.NavLink("Arbol AVL", href="/avl", active="exact"),
+            ],
+            vertical=False,
+            pills=True,
+        ),
+    ],
+    
+)
 
 body = html.Div(
     className='wrapper',
@@ -93,28 +125,25 @@ body = html.Div(
                             html.Div(
                                 className='card',
                                 children=[
-                                    dbc.Label('Generar listado aleatorio',
-                                              className='card-title'),
-                                    html.Span("",
-                                              className='label'),
-                                    html.Button('Obtener datos', id='random',
-                                                className='btn btn-primary btn-lg button', n_clicks=0)
+                                    dcc.Location(id="url"),
+                                    sidebar_trees
+                                ], style={'alignItems': 'center'})
 
-                                ]
-                            ),
-                        ], width=4),
+                        ], width=3),
                         dbc.Col([
                             html.Div(
                                 className='card',
                                 children=[
-                                    dbc.Spinner(children=[html.Div(id='tree', className='date-picker', style={'margin': 'auto', 'height': '235px'})],
+                                    dbc.Spinner(children=[html.Div(id='tree', className='date-picker', style={'margin': 'auto', 'height': '535px'})],
                                                 size="lg", color="primary", type="border", fullscreen=True, spinner_style={'margin': 'auto'}),
                                 ], style={'alignItems': 'center'})
 
-                        ], width=8)
+                        ], width=9)
                     ]),
 
                 ])
             ])
         ])
     ])
+
+
