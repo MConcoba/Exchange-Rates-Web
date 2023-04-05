@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from models.data_saved_model import Data
+from controllers.binary_tree import BinaryTree
 import random
 
 
@@ -9,6 +10,7 @@ class CircularDouble():
     def __init__(self):
         self.first = None
         self.last = None
+        self.tree = BinaryTree()
 
     def empy(self):
         return self.first == None
@@ -76,28 +78,33 @@ class CircularDouble():
 
     def show_group_from_init(self):
         monedas = defaultdict(list)
-        for item in self.show_from_init():
+        tools = []
+        for item in self.get_random_list():
             fecha = item['date']
             id = item['id']
             iso = item['iso']
             id = item['id']
             pais = item['country']
             valor = item['value']
+            tools.append(self.tree.tooltips(item))
             monedas[fecha].append(
                 {'id': id, 'iso': iso, 'pais': pais, 'valor': valor})
-        resultado = {'status': True, 'records': [
+        dot = self.tree.preorder_dot(self.tree.root)
+        a = self.tree.new_dot(dot)
+        resultado = {'status': True,'tree': a,  'tooltips': tools, 'records': [
             {'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
         return resultado
 
     def get_random_list(self):
+        self.tree = BinaryTree()
         list_random = []
         lista = self.show_from_init()
         random.shuffle(lista)
         nueva_lista = lista
         random.shuffle(nueva_lista)
         for item in nueva_lista:
-            list_random.append(item['id'])
-        print(list_random)
+            self.tree.add(item)
+            list_random.append(item)
         return list_random
 
     def get_lent(self):

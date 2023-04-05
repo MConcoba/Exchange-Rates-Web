@@ -52,9 +52,9 @@ def getData(start, end, coins):
             lista.add(exchange_reates[x], 'last')
 
         os.system('cls')
-        now = datetime.now()
+        #now = datetime.now()
 
-        print('*'*100)
+        """  print('*'*100)
         print('INFORMACION DEL PRIMER DATO')
         print('     Valor', lista.first.data)
         print('     Siguiente', lista.first.next.data)
@@ -65,7 +65,7 @@ def getData(start, end, coins):
         print('     Siguiente', lista.last.next.data)
         print('     Anterior', lista.last.prev.data)
 
-        print('*'*100)
+        print('*'*100) """
        # lista.get_random_list()
         return lista.show_group_from_init()
     else:
