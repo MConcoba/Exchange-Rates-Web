@@ -5,13 +5,14 @@ from dash.dependencies import Input, Output
 from env import prod
 from controllers.request import getData, get_ramdom
 from views.table import table_Data
+from views.tree import binary_tree
 from views.template import body
 from views.alert import get_error_modal
 from config_dash import app
 
 
 @app.callback(
-    Output('res', 'children'),
+    [Output('res', 'children'), Output('tree', 'children')],
     [Input('submit', 'n_clicks'),
      Input('my-date-picker-range', 'start_date'),
      Input('my-date-picker-range', 'end_date'),
@@ -30,12 +31,13 @@ def update_output(btn, start_date, end_date, select, btn2):
             return get_error_modal(data['message'])
         else:
             info = table_Data(data['records'], rows)
+            t = binary_tree(data['tree'], data['tooltips'])
     elif 'random' == ctx.triggered_id:
-        info = get_ramdom()
+        pass
     else:
         return dash.no_update
         info = 'Para obtener los datos da completa la informacion y da click en el boton'
-    return info
+    return info, t
 
 
 @app.callback(

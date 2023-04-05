@@ -107,7 +107,7 @@ body = html.Div(
                             html.Div(
                                 className='card',
                                 children=[
-                                    dbc.Spinner(children=[html.Div(id='tree', className='date-picker', style={'margin': 'auto'})],
+                                    dbc.Spinner(children=[html.Div(id='tree', className='date-picker', style={'margin': 'auto', 'height': '235px'})],
                                                 size="lg", color="primary", type="border", fullscreen=True, spinner_style={'margin': 'auto'}),
                                 ], style={'alignItems': 'center'})
 
