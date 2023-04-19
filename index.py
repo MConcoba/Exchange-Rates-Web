@@ -1,25 +1,35 @@
 import dash_bootstrap_components as dbc
-from dash import ctx, State, dash
+from dash import ctx, State, dash, html
 from dash.dependencies import Input, Output
 
 from env import prod
-from controllers.request import getData, get_ramdom
+from controllers.request import getData
 from views.table import table_Data
 from views.tree import binary_tree
+from views.data import datos
 from views.template import body
 from views.alert import get_error_modal
 from config_dash import app
 
+""" @app.callback(
+    Output("page-tree", "children"),
+    [Input("url-tree", "pathname")]
+)
+def render_page_content(pathG):
+    print(pathG)
+    if pathG == "/binary":
+        return show_tree
+    elif pathG == '/avl':
+        return show_tree """
 
 @app.callback(
-    [Output('res', 'children'), Output('tree', 'children')],
+    [Output('res', 'children'), Output('tree', 'children'), ],
     [Input('submit', 'n_clicks'),
      Input('my-date-picker-range', 'start_date'),
      Input('my-date-picker-range', 'end_date'),
-     Input('country-select', 'value'),
-     Input('random', 'n_clicks')],
+     Input('country-select', 'value'), Input("url-tree", "pathname")],
 )
-def update_output(btn, start_date, end_date, select, btn2):
+def update_output(btn, start_date, end_date, select, path):
     if 'submit' == ctx.triggered_id:
         s = select
         rows = 1
@@ -32,8 +42,6 @@ def update_output(btn, start_date, end_date, select, btn2):
         else:
             info = table_Data(data['records'], rows)
             t = binary_tree(data['tree'], data['tooltips'])
-    elif 'random' == ctx.triggered_id:
-        pass
     else:
         return dash.no_update
         info = 'Para obtener los datos da completa la informacion y da click en el boton'

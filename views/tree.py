@@ -1,14 +1,12 @@
 import dash_bootstrap_components as dbc
-from dash import html, dcc
-from dash_iconify import DashIconify
+from dash import html
 import dash_interactive_graphviz
 
 
 def binary_tree(dots, tool):
     tooltip_text = ''.join(tool)
-
     initial_dot_source = """
-        digraph { """ + tooltip_text +  dots + """ } """
+        digraph {  """+  dots + """ } """
     return html.Div(
         dash_interactive_graphviz.DashInteractiveGraphviz(
             id="gv1", 

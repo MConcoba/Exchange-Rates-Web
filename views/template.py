@@ -125,7 +125,7 @@ body = html.Div(
                             html.Div(
                                 className='card',
                                 children=[
-                                    dcc.Location(id="url"),
+                                    dcc.Location(id="url-tree"),
                                     sidebar_trees
                                 ], style={'alignItems': 'center'})
 
