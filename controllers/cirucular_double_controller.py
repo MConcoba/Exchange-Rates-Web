@@ -1,26 +1,26 @@
 from collections import defaultdict
-
 from models.data_saved_model import Data
-from controllers.binary_tree import BinaryTree
-import random
-
 
 class CircularDouble():
 
     def __init__(self):
+        self.root = None
         self.first = None
         self.last = None
-        self.tree = BinaryTree()
 
     def empy(self):
         return self.first == None
 
     def add(self, info, place):
         if self.empy():
-            self.first = self.last = Data(info)
+            self.first = self.last = Data(info, is_root=True)
         elif place == 'last':
+            node = self.__get_place(info)
             new = self.last
-            self.last = new.next = Data(info)
+            if float(info['id']) <= float(node.id):
+                node.left = self.last = new.next = Data(info, parent=node, is_left=True)
+            else:
+                node.right = self.last = new.next = Data(info, parent=node, is_right=True)
             self.last.prev = new
         elif place == 'first':
             new = Data(info)
@@ -30,6 +30,39 @@ class CircularDouble():
         else:
             return 'Error to add element'
         self.__join_nodes__()
+
+    def __get_place(self, value):
+        aux = self.first
+        while aux:
+            temp = aux
+            if float(value['id']) <= float(aux.id):
+                aux = aux.left
+            else:
+                aux = aux.right
+        return temp
+    
+    def show_in_order(self, node):
+        if node:
+            self.show_in_order(node.left)
+            print(node.id)
+            self.show_in_order(node.right)
+        
+    def show_pre_order(self, node):
+        # Ra, Iz, De
+        result = []
+        if node:
+            result.append(node.id)
+            result += self.show_pre_order(node.left)
+            result += self.show_pre_order(node.right)
+        return result
+
+    def show_post_order(self, node):
+        # Iz, Ra, De
+        if node:
+            self.show_post_order(node.left)
+            self.show_post_order(node.right)
+            print(node)
+
 
     def remove(self, place):
         if self.empy():
@@ -78,37 +111,40 @@ class CircularDouble():
 
     def show_group_from_init(self):
         monedas = defaultdict(list)
-        tools = []
-        for item in self.get_random_list():
+        for item in self.show_from_init():
             fecha = item['date']
             id = item['id']
             iso = item['iso']
             id = item['id']
             pais = item['country']
             valor = item['value']
-            tools.append(self.tree.tooltips(item))
             monedas[fecha].append(
                 {'id': id, 'iso': iso, 'pais': pais, 'valor': valor})
-        dot = self.tree.preorder_dot(self.tree.root)
-        a = self.tree.new_dot(dot)
-        resultado = {'status': True,'tree': a,  'tooltips': tools, 'records': [
+        dots = self.get_dots()
+        resultado = {'status': True,'tree': dots,  'tooltips': [], 'records': [
             {'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
         return resultado
 
-    def get_random_list(self):
-        self.tree = BinaryTree()
-        list_random = []
-        lista = self.show_from_init()
-        random.shuffle(lista)
-        nueva_lista = lista
-        random.shuffle(nueva_lista)
-        for item in nueva_lista:
-            self.tree.add(item)
-            list_random.append(item)
-        return list_random
-
     def get_lent(self):
         return self.show_from_init().__len__()
+    
+    def get_dots(self):
+        if not self.first:
+            return ''
+        graph = '\n'
+        stack = [self.first]
+        while stack:
+            node = stack.pop()
+            if node:
+                graph += f'  {node.id} [tooltip="{node.data}"];\n'
+                if node.left:
+                    graph += f'  {node.id} -> {node.left.id};\n'
+                    stack.append(node.left)
+                if node.right:
+                    graph += f'  {node.id} -> {node.right.id};\n'
+                    stack.append(node.right)
+        #graph += '}'
+        return graph
 
     def __join_nodes__(self):
         if self.first != None:

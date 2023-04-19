@@ -2,6 +2,8 @@ import json
 import os
 import pandas as pd
 import requests
+import random
+import itertools
 # import tableprint
 
 from env import key_api, url_api
@@ -25,33 +27,22 @@ def getData(start, end, coins):
         result = response.text
         datos = json.loads(result)
         rates = datos['rates']
-
-        i = 1
-        exchange_reates = []
-        id_counter = 1
+        total = sum(len(currencies) for currencies in rates.values())
+        ids = id_ramdom(total)
+        ids_cycle = itertools.cycle(ids)
         for date, values in rates.items():
             for iso, value in values.items():
-                
-                exchange_reates.append({
-                    'id': id_counter,
+                country = next((s['label'] for s in getSymbols() if s['value'] == iso), '')
+                exchange_rate = {
+                    'id': next(ids_cycle),
                     'date': date,
                     'iso': iso,
-                    'country': '',
+                    'country': country,
                     'value': round(value, 2)
-                })
-                id_counter += 1
-        symbols = getSymbols()  # Obtener la lista de símbolos
+                }
+                lista.add(exchange_rate, 'last')
 
-        for i in exchange_reates:
-            for s in symbols:
-                if s['value'] == i['iso']:
-                    # Buscar el país y asignar su valor
-                    i['country'] = s['label']
-
-        for x in range(len(exchange_reates)):
-            lista.add(exchange_reates[x], 'last')
-
-        os.system('cls')
+        #os.system('cls')
         #now = datetime.now()
 
         """  print('*'*100)
@@ -75,6 +66,8 @@ def getData(start, end, coins):
 def get_ramdom():
     return lista.get_random_list()
 
+def id_ramdom(limit):
+    return random.sample(range(1, limit+1), limit)
 
 def getSymbols():
     url = url_api + "/symbols"
