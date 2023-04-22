@@ -136,7 +136,8 @@ class CircularDouble():
         while stack:
             node = stack.pop()
             if node:
-                graph += f'  {node.id} [tooltip="{node.data}"];\n'
+                formatted_data = "\n".join([f"{key}: {value}" for key, value in node.data.items()])
+                graph += f'{node.id} [tooltip="{formatted_data}"];\n'
                 if node.left:
                     graph += f'  {node.id} -> {node.left.id};\n'
                     stack.append(node.left)

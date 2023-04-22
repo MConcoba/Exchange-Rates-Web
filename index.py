@@ -41,7 +41,7 @@ def update_output(btn, start_date, end_date, select, path):
             return get_error_modal(data['message'])
         else:
             info = table_Data(data['records'], rows)
-            t = binary_tree(data['tree'], data['tooltips'])
+            t = binary_tree(data['tree'])
     else:
         return dash.no_update
         info = 'Para obtener los datos da completa la informacion y da click en el boton'
