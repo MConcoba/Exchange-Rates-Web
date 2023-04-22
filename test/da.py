@@ -1,0 +1,88 @@
+import dash_interactive_graphviz
+import dash
+from dash.dependencies import Input, Output
+import dash_html_components as html
+import dash_core_components as dcc
+import json
+
+
+app = dash.Dash(__name__)
+
+initial_dot_source = """
+digraph  {
+node[style="filled"]
+a [tooltip="{'id': 'a', 'fecha': '2023-02-07', 'iso': 'JPY', 'pais': 'Japan', 'valor': 132.62}"];
+a->b->d
+a->c->d
+}
+"""
+
+obj = [{'id': 'a', 'fecha': '2023-02-07', 'iso': 'JPY', 'pais': 'Japan', 'valor': 132.62},
+       {'id': 'b', 'fecha': '2023-02-07', 'iso': 'JPY', 'pais': 'Japan', 'valor': 132.62}]
+
+
+
+app.layout = html.Div(
+    [
+        html.Div(
+            dash_interactive_graphviz.DashInteractiveGraphviz(id="gv", selected=True
+),
+            style=dict(flexGrow=1, position="relative"),
+            
+        ),
+        html.Div(
+            [
+                html.H3("Selected element"),
+                html.Div(id="selected"),
+                html.H3("Dot Source"),
+                dcc.Textarea(
+                    id="input",
+                    value=initial_dot_source,
+                    style=dict(flexGrow=1, position="relative"),
+                ),
+                html.H3("Engine"),
+                dcc.Dropdown(
+                    id="engine",
+                    value="dot",
+                    options=[
+                        dict(label=engine, value=engine)
+                        for engine in [
+                            "dot",
+                            "fdp",
+                            "neato",
+                            "circo",
+                            "osage",
+                            "patchwork",
+                            "twopi",
+                        ]
+                    ],
+                ),
+            ],
+            style=dict(display="flex", flexDirection="column"),
+        ),
+    ],
+    style=dict(position="absolute", height="100%", width="100%", display="flex"),
+)
+
+
+@app.callback(
+    [Output("gv", "dot_source"), Output("gv", "engine")],
+    [Input("input", "value"), Input("engine", "value")],
+)
+def display_output(value, engine):
+    print(value)
+    return value, engine
+
+
+@app.callback(Output("selected", "children"), [Input("gv", "selected")])
+def show_selected(value):
+    for objeto in obj:
+        if objeto['id'] == value:
+            return html.Pre(json.dumps(objeto, indent=2))
+    return html.Div('')
+
+    
+
+
+if __name__ == "__main__":
+    app.run_server(debug=True)

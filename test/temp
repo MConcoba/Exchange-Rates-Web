@@ -1,0 +1,11 @@
+digraph {
+	1 [label=1 tooltip="Nodo 1"]
+	2 [label=2 tooltip="Nodo 2"]
+	3 [label=3 tooltip="Nodo 3"]
+	4 [label=4 tooltip="Nodo 4"]
+	5 [label=5 tooltip="Nodo 5"]
+	2 -> 1
+	2 -> 4
+	4 -> 3
+	4 -> 5
+}
