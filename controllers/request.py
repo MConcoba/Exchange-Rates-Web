@@ -4,7 +4,6 @@ import pandas as pd
 import requests
 import random
 import itertools
-# import tableprint
 
 from env import key_api, url_api
 from controllers.cirucular_double_controller import CircularDouble

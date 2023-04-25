@@ -6,7 +6,6 @@ from env import prod
 from controllers.request import getData
 from views.table import table_Data
 from views.tree import binary_tree
-from views.data import datos
 from views.template import body
 from views.alert import get_error_modal
 from config_dash import app
