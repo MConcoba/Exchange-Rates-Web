@@ -1,5 +1,6 @@
 from collections import defaultdict
 from models.data_saved_model import Data
+from controllers.binary_tree import BinaryTree
 
 class CircularDouble():
 
@@ -13,14 +14,10 @@ class CircularDouble():
 
     def add(self, info, place):
         if self.empy():
-            self.first = self.last = Data(info, is_root=True)
+            self.first = self.last = Data(info)
         elif place == 'last':
-            node = self.__get_place(info)
             new = self.last
-            if float(info['id']) <= float(node.id):
-                node.left = self.last = new.next = Data(info, parent=node, is_left=True)
-            else:
-                node.right = self.last = new.next = Data(info, parent=node, is_right=True)
+            self.last = new.next = Data(info)
             self.last.prev = new
         elif place == 'first':
             new = Data(info)
@@ -30,39 +27,6 @@ class CircularDouble():
         else:
             return 'Error to add element'
         self.__join_nodes__()
-
-    def __get_place(self, value):
-        aux = self.first
-        while aux:
-            temp = aux
-            if float(value['id']) <= float(aux.id):
-                aux = aux.left
-            else:
-                aux = aux.right
-        return temp
-    
-    def show_in_order(self, node):
-        if node:
-            self.show_in_order(node.left)
-            print(node.id)
-            self.show_in_order(node.right)
-        
-    def show_pre_order(self, node):
-        # Ra, Iz, De
-        result = []
-        if node:
-            result.append(node.id)
-            result += self.show_pre_order(node.left)
-            result += self.show_pre_order(node.right)
-        return result
-
-    def show_post_order(self, node):
-        # Iz, Ra, De
-        if node:
-            self.show_post_order(node.left)
-            self.show_post_order(node.right)
-            print(node)
-
 
     def remove(self, place):
         if self.empy():
@@ -111,42 +75,29 @@ class CircularDouble():
 
     def show_group_from_init(self):
         monedas = defaultdict(list)
+        ids = []
+        binario = BinaryTree()
         for item in self.show_from_init():
+            
             fecha = item['date']
             id = item['id']
+            ids.append(id)
             iso = item['iso']
             id = item['id']
             pais = item['country']
             valor = item['value']
             monedas[fecha].append(
                 {'id': id, 'iso': iso, 'pais': pais, 'valor': valor})
-        dots = self.get_dots()
-        resultado = {'status': True,'tree': dots,  'tooltips': [], 'records': [
+            binario.add(item)
+        dots = binario.get_dots()
+        resultado = {'status': True,'tree': dots, 'ids': ids, 'tooltips': [], 'records': [
             {'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
         return resultado
 
     def get_lent(self):
         return self.show_from_init().__len__()
     
-    def get_dots(self):
-        if not self.first:
-            return ''
-        graph = '\n'
-        stack = [self.first]
-        while stack:
-            node = stack.pop()
-            if node:
-                formatted_data = "\n".join([f"{key}: {value}" for key, value in node.data.items()])
-                graph += f'{node.id} [tooltip="{formatted_data}"];\n'
-                if node.left:
-                    graph += f'  {node.id} -> {node.left.id};\n'
-                    stack.append(node.left)
-                if node.right:
-                    graph += f'  {node.id} -> {node.right.id};\n'
-                    stack.append(node.right)
-        #graph += '}'
-        return graph
-
+    
     def __join_nodes__(self):
         if self.first != None:
             self.first.prev = self.last
