@@ -12,7 +12,7 @@ class BinaryTree:
         return self.first == None
 
     def add(self, info):
-        print(info)
+       # print(info)
         if self.empy():
             self.first = self.last = GeneralNodo(info, is_root=True)
         else:
@@ -26,7 +26,7 @@ class BinaryTree:
     
     def __get_place(self, value):
         aux = self.first
-        print(aux.data)
+        # print(aux.data)
         while aux:
             temp = aux
             if float(value['id']) <= float(aux.id):
@@ -38,7 +38,7 @@ class BinaryTree:
     def show_in_order(self, node):
         if node:
             self.show_in_order(node.left)
-            print(node.id)
+            # print(node.id)
             self.show_in_order(node.right)
         
     def show_pre_order(self, node):

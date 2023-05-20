@@ -78,7 +78,6 @@ class CircularDouble():
         ids = []
         binario = BinaryTree()
         for item in self.show_from_init():
-            
             fecha = item['date']
             id = item['id']
             ids.append(id)
@@ -92,6 +91,7 @@ class CircularDouble():
         dots = binario.get_dots()
         resultado = {'status': True,'tree': dots, 'ids': ids, 'tooltips': [], 'records': [
             {'fecha': fecha, 'monedas': monedas} for fecha, monedas in monedas.items()]}
+        # print(resultado)
         return resultado
 
     def get_lent(self):

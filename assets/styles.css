@@ -72,6 +72,9 @@ body {
     /* margin: auto; */
 }
 
+.datos-tabla {
+    /* min-height: 535px */
+}
 
 .loader {
     display: none;
@@ -103,4 +106,11 @@ svg {
 svg:hover {
     cursor: pointer;
     transform: scale(1.3);
+}
+
+.graph-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }

@@ -4,18 +4,34 @@ import dash_interactive_graphviz
 
 
 def binary_tree(dots):
-    print(dots)
     initial_dot_source = """
         digraph { node [style="filled"]  """+  dots + """ } """
 
-    return html.Div(
+    return html.Div([
+        html.Div([
+            dbc.Label('Arbol Binario', className='card-title'),
+        ]),
         dash_interactive_graphviz.DashInteractiveGraphviz(
             id="gv1", 
             dot_source=initial_dot_source, 
             engine="dot",
             style={'height': '80%', 'width': '45%'},  # para limitar el tamaño del contenedor
         ),
-    )
+    ])
+
+
+def avl_tree(dots):
+    new = """
+        digraph { node [style="filled"]  """+  dots + """ } """
+
+    return html.Div([
+        dash_interactive_graphviz.DashInteractiveGraphviz(
+            id="gv2", 
+            dot_source = new, 
+            engine="dot",
+            style={'height': '80%', 'width': '45%'},  # para limitar el tamaño del contenedor
+        ),
+    ])
 
 
 def create_alert():

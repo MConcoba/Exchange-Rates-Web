@@ -20,3 +20,9 @@ class NodeAVL:
         self.left = None
         self.right = None
         self.height = 1
+
+class NodeHash:
+
+    def __init__(self, id, datos) -> None:
+        self.id = id,
+        self.datos = datos

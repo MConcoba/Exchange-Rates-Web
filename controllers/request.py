@@ -7,6 +7,7 @@ import itertools
 
 from env import key_api, url_api
 from controllers.cirucular_double_controller import CircularDouble
+from controllers.avl_tree import AVLTree
 
 lista = CircularDouble()
 
@@ -29,6 +30,8 @@ def getData(start, end, coins):
         total = sum(len(currencies) for currencies in rates.values())
         ids = id_ramdom(total)
         ids_cycle = itertools.cycle(ids)
+        avl_tree = AVLTree()
+        root = None
         for date, values in rates.items():
             for iso, value in values.items():
                 country = next((s['label'] for s in getSymbols() if s['value'] == iso), '')
@@ -40,6 +43,10 @@ def getData(start, end, coins):
                     'value': round(value, 2)
                 }
                 lista.add(exchange_rate, 'last')
+                #root = avl_tree.insert(root, exchange_rate)
+                #avl_tree.tooltip(exchange_rate)
+
+        #print(avl_tree.get_dots(root))
 
         #os.system('cls')
         #now = datetime.now()

@@ -70,7 +70,7 @@ app.layout = html.Div(
     [Input("input", "value"), Input("engine", "value")],
 )
 def display_output(value, engine):
-    print(value)
+    #print(value)
     return value, engine
 
 
