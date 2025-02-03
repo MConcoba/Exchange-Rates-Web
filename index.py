@@ -10,6 +10,7 @@ from views.alert import get_error_modal
 from config_dash import app
 
 
+
 @app.callback(
     Output('res', 'children'),
     [Input('submit', 'n_clicks'),
@@ -48,6 +49,7 @@ def toggle_error_modal(n_clicks, is_open):
         return not is_open
     return is_open
 
+server = app.server
 
 if __name__ == '__main__':
     app.run_server(debug=prod)
