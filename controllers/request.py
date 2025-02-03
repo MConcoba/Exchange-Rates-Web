@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 import pandas as pd
@@ -11,9 +12,10 @@ lista = CircularDouble()
 
 
 def getData(start, end, coins):
+    print(start)
+    #https://api.frankfurter.dev/v1/2000-01-01..2000-12-31?base=USD&symbols=EUR
     lista.clear()
-    url = url_api + "/timeseries?start_date=" + start+"&end_date="+end + \
-        "&base=USD&symbols="+coins
+    url = "https://api.frankfurter.dev/v1/"  + start + ".." + end + "?base=USD&symbols="+coins
     payload = {}
     headers = {
         "apikey": key_api
@@ -75,10 +77,9 @@ def getData(start, end, coins):
 def get_ramdom():
     return lista.get_random_list()
 
-
+#https://api.freecurrencyapi.com/v1/currencies?apikey=fca_live_esnjE33JDIop8gSJKKC6rSxPCKVRPBvN2vjO0QII&currencies=EUR%2CUSD%2CCAD
 def getSymbols():
-    url = url_api + "/symbols"
-
+    url = 'https://api.frankfurter.dev/v1/currencies'
     payload = {}
     headers = {
         "apikey": key_api
@@ -87,14 +88,18 @@ def getSymbols():
     response = requests.request("GET", url, headers=headers, data=payload)
     result = response.text
     datos = json.loads(result)
-    symbols = datos['symbols']
+    symbols = datos
     resultado = [
         {
             'value': iso,
             'label': nombre
         } for iso, nombre in symbols.items()
     ]
-    # print(resultado)
+    """ resultado = [
+        {'value': code, 'label': details['name']}
+        for code, details in symbols.items()
+    ] """
+    print(resultado)
     return resultado
 
 
