@@ -86,7 +86,7 @@ body = html.Div(
                     is_open=False,
                 )
             ]),
-            dbc.Tab(label='Arboles', children=[
+            dbc.Tab(label='', children=[
                 html.Div([
                     dbc.Row([
                         dbc.Col([
